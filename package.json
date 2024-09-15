@@ -15,7 +15,8 @@
     "nodemon",
     "express",
     "axios",
-    "body-parser"
+    "body-parser",
+    "mysql2"
   ],
   "description": "Using alpaca trading api",
   "dependencies": {
@@ -23,6 +24,7 @@
     "body-parser": "^1.20.3",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
+    "mysql2": "^3.11.2",
     "nodemon": "^3.1.4"
   }
 }

@@ -1,6 +1,6 @@
 // router.js
 const express = require('express');
-const { buyStock, sellStock, getPositions } = require('./controller');
+const { buyStock, sellStock, getPositions, getAllTransactions} = require('./controller');
 
 const router = express.Router();
 
@@ -14,8 +14,13 @@ router.post('/sell', sellStock);
 router.get('/positions', getPositions);
 
 router.get('/test', (req, res) => {
-    res.json({ message: 'Server is working!' });
+    res.json({ 
+        message: 'Server is working!'
+     });
   });
   
- 
+ // Route to get all stock transactions
+router.get('/transactions', getAllTransactions);
+
+
 module.exports = router;

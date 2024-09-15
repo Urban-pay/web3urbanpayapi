@@ -1,4 +1,5 @@
 const axios = require('axios');
+const promisePool = require("./db")
 require('dotenv').config();
 
 const API_KEY = process.env.API_KEY;
@@ -28,6 +29,13 @@ exports.buyStock = async (req, res) => {
 
   try {
     const response = await alpacaApi.post('/orders', orderData);
+
+    // Save order to the database
+    await promisePool.query(
+        'INSERT INTO stock_transactions (symbol, qty, side, type, time_in_force, status) VALUES (?, ?, ?, ?, ?, ?)',
+        [symbol, qty, 'buy', 'market', 'gtc', response.data.status]
+      );
+
     res.status(200).json({ 
         message: 'Buy order placed', 
         data: response.data
@@ -54,6 +62,13 @@ exports.sellStock = async (req, res) => {
 
   try {
     const response = await alpacaApi.post('/orders', orderData);
+
+     // Save order to the database
+     await promisePool.query(
+        'INSERT INTO stock_transactions (symbol, qty, side, type, time_in_force, status) VALUES (?, ?, ?, ?, ?, ?)',
+        [symbol, qty, 'sell', 'market', 'gtc', response.data.status]
+      );
+
     res.status(200).json({ 
         message: 'Sell order placed',
          data: response.data
@@ -82,3 +97,24 @@ exports.getPositions = async (req, res) => {
     });
   }
 };
+
+
+// Get all stock transactions
+exports.getAllTransactions = async (req, res) => {
+    try {
+      // Fetch all records from stock_transactions table
+      const [rows] = await promisePool.query('SELECT * FROM stock_transactions');
+      
+      // Send the result as JSON
+      res.status(200).json({
+        message: 'All transactions fetched successfully',
+        data: rows
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: 'Error fetching transactions',
+        error: error.message
+      });
+    }
+  };
+  
