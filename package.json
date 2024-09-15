@@ -1,0 +1,28 @@
+{
+  "name": "alpacatrading",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js",
+    "build": "node server.js"
+  },
+  "author": "gloria",
+  "license": "ISC",
+  "keywords": [
+    "alpaceApi",
+    "node",
+    "nodemon",
+    "express",
+    "axios",
+    "body-parser"
+  ],
+  "description": "Using alpaca trading api",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "body-parser": "^1.20.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "nodemon": "^3.1.4"
+  }
+}
