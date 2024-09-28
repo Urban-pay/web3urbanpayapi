@@ -1,4 +1,3 @@
-// router.js
 const express = require('express');
 const { buyStock, sellStock, getPositions, getAllTransactions} = require('./controller');
 
@@ -21,6 +20,21 @@ router.get('/test', (req, res) => {
   
  // Route to get all stock transactions
 router.get('/transactions', getAllTransactions);
+
+
+// Stock history routers
+
+
+
+const { getRealTimeStock, getHistoricalStock } = require('./stockController');
+
+
+// Real-time stock price route
+router.get('/:symbol/real-time', getRealTimeStock);
+
+// Historical stock data with caching route
+router.get('/:symbol/:type', getHistoricalStock);
+
 
 
 module.exports = router;
