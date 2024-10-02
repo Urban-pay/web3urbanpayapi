@@ -15,12 +15,20 @@ app.use(express.json());
 // Redis client setup
 const redisClient = redis.createClient();
 
+
+
 redisClient.on('error', (err) => {
     console.error('Redis error:', err);
     res.status(500).json({
       message: 'Redis error:', err
     })
 });
+
+// redisClient.connect().then(() => {
+//   console.log('Connected to Redis');
+// }).catch(err => {
+//   console.error('Failed to connect to Redis:', err);
+// });
 
 // Make the Redis client available globally
 app.use((req, res, next) => {

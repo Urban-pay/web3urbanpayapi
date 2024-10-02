@@ -20,7 +20,7 @@ getStockData('AAPL'); // Fetch data for Apple Inc.
 
 // Utility function to fetch data from the Finnhub API
 const fetchStockData = async (symbol, endpoint) => {
-    const url = `${BASE_URL}/${endpoint}?symbol=${symbol}&token=${API_KEY}`;
+    const url = `${BASE_URL}/${endpoint}?symbol=${symbol}&token=${finapiKey}`;
     const response = await axios.get(url);
     return response.data;
 };
