@@ -96,3 +96,33 @@ const getPositions = async () => {
 //   // Check how much money we can use to open new positions.
 //   console.log(`$${account.buying_power} is available as buying power.`);
 // });
+
+
+
+
+
+// Fetch user's current positions (stocks owned)
+const positionsResponse = await alpacaApi.get('/v2/positions');
+const positions = positionsResponse.data;
+
+// Check if the user holds the stock
+const stockPosition = positions.find(pos => pos.symbol === symbol.toUpperCase());
+
+if (!stockPosition) {
+  // If stock not found in the user's portfolio, return error
+  return handleError(req, res, {
+    body: {
+      errorType: 'stock_unavailable'
+    }
+  });
+}
+
+// Check if the user has enough quantity to sell
+if (qty > parseFloat(stockPosition.qty)) {
+  // If insufficient stock quantity, return error
+  return handleError(req, res, {
+    body: {
+      errorType: 'insufficient_funds'
+    }
+  });
+}

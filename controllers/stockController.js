@@ -3,12 +3,12 @@ require("dotenv").config();
 
 const finapiKey = process.env.finapiKey;
 // const apiKey = process.env.apiKey;
-const BASE_URL = 'https://finnhub.io/api/v1';
+const FINBASE_URL = 'https://finnhub.io/api/v1';
 // console.log(finapiKey);
 const getStockData = async (symbol) => {
     try {
-        const response = await axios.get(`${BASE_URL}/quote?symbol=${symbol}&token=${finapiKey}`);
-        console.log(response.data);
+        const response = await axios.get(`${FINBASE_URL}/quote?symbol=${symbol}&token=${finapiKey}`);
+        // console.log(response.data);
     
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -20,18 +20,18 @@ getStockData('AAPL'); // Fetch data for Apple Inc.
 
 // Utility function to fetch data from the Finnhub API
 const fetchStockData = async (symbol, endpoint) => {
-    const url = `${BASE_URL}/${endpoint}?symbol=${symbol}&token=${finapiKey}`;
+    const url = `${FINBASE_URL}/${endpoint}?symbol=${symbol}&token=${finapiKey}`;
     const response = await axios.get(url);
     return response.data;
 };
-
+ 
 // Controller function to fetch real-time stock price
 exports.getRealTimeStock = async (req, res) => {
-    const { symbol } = req.params;
+    const { symbol } = req.body;
 
     try {
         const data = await fetchStockData(symbol, 'quote');
-        res.json(data);
+        res.status(200).json(data);
     } catch (error) {
         console.error('Error fetching real-time data:', error);
         res.status(500).json({

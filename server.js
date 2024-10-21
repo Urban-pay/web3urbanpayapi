@@ -7,7 +7,7 @@ const router = require('./router');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 4045;
+const PORT = process.env.PORT || 4046;
 
 // app.use(bodyParser.json());
 app.use(express.json());
